@@ -1,4 +1,66 @@
 //Author: Christian Gogo & Austin Seaver
-//Date: 04/29/24
+//Date: 04/29/24/Mon/1140
 //Purpose: Group Final Design Document
-//hello world!
+
+
+Data:
+Image - int 2D array
+File pointer image
+Brighten - boolean
+Dim - boolean
+Crop - boolean
+Edit - boolean
+Row - int
+Column - int
+Final image point
+
+Functionality:
+ A menu will load with the following options load the image, display the current image, edit the current image, exit the current image, and exit the program. If they choose to edit they will be met with another menu where they will be able to choose from crop, dim, brighten, and rotatie. If they choose to load a new image it will be pulled from a file. If they choose to display the current image it will read from the file and print the image, and if they choose to exit the program will terminate.
+
+Functions:
+Main()
+Data: 2D array for image size. Variables for load, rotate, edit, display, quit.
+Functionality: Provide menu prompts. Call to other functions to change to load, display, edit, or
+quit.
+
+loadImage()
+Input Parameters: File pointer, int rows, int columns, int image 2D array
+Returned Output: None
+Functionality: Load values from file into image 2D array.
+
+displayImage()
+Input Parameters: int rows, int columns, int image 2D array
+Returned Output: Image
+Functionality: Display image pixels of chars of a space, a period, lower case ‘o’, upper case ‘O’, a
+zero.
+
+editImage()
+Input Parameters: file pointer, brightness, dim, rotate, crop
+Returned Output: image
+Functionality: Allows the user to choose how they want to edit the image.
+
+
+cropImage()
+Input Parameters: image, crop, size
+Returned Output: image
+Functionality: Crops a smaller section of the current image.
+
+dimImage()
+Input Parameters: file pointer, brightness, dim, rotate, crop
+Returned Output: image
+Functionality: Dims the current image
+
+brightenImage()
+Input Parameters: file pointer, brightness, dim, rotate, crop
+Returned Output: image
+Functionality: Brightens the current image
+
+rotateImage()
+Input Parameters: Image, rotate
+Returned Output: Rotated image
+Functionality: Allows the image to be rotated 90 degrees in one direction.
+
+saveImage()
+Input Parameters: File Pointer
+Returned Output: File Pointer
+Functionality: Saves current image to new or existing file.
