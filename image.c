@@ -115,6 +115,18 @@ void editImage(){
 }
 
 void cropImage(){
+	int left, right, top, bottom;
+	//We need to make variables for the image we are going to crop
+//	printf("The image you want to crop is %d x %d.\n", );
+	printf("The row and column values start in the upper lefthand corner.\n");
+	printf("Which column do you want to be the new left side? ");
+	scanf("%d", &left);
+	printf("Which column do you want to be the new right side? ");
+	scanf("%d", &right);
+	printf("Which row do you want to be the new top? ");
+	scanf("%d", &top);
+	printf("Which row do you want to be the new bottom? ");
+	scanf("%d", &bottom);
 }
 
 void dimImage(){
