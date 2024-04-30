@@ -9,13 +9,14 @@
 #define FILE_SIZE 100
 
 
-void loadImage(), displayImage(), editImage(), cropImage(), dimImage(), brightenImage(), rotateImage(), saveImage();
+void loadImage(FILE* readFilePointer), displayImage(), editImage(), cropImage(), dimImage(), brightenImage(), rotateImage(), saveImage();
 
 
 int main(){
 	char displayArray[ROW][COL];
 	char menuChoice;
-	FILE *readFilePointer;
+	FILE* readFilePointer;
+	
 	
 
 	printf("**TEAM_9_STAGRAM**\n");
@@ -27,7 +28,7 @@ int main(){
 	
 	switch(menuChoice){
 		case '1':
-			//function call load image file
+			loadImage(readFilePointer);
 			break;
 		case '2':
 			//function call to display image
@@ -45,32 +46,38 @@ int main(){
 	return 0;
 }
 
-void loadImage(){
-	int loadArray[ROW][COL];
+void loadImage(FILE* readFilePointer){
+	int colI, rowI;
+	char loadArray[ROW][COL];
 	char fileName[FILE_SIZE];
 	printf("What is the name of the image file? ");
 	scanf(" %s", fileName);
-//	readFilePointer = fopen(fileName, "r");
-//	if(readFilePointer == NULL){
+	readFilePointer = fopen(fileName, "r");
+	if(readFilePointer == NULL){
 		printf("Could not find an image with that file name.\n");
-//	}
-//	else{
-		for(int rowI = 0; rowI < ROW; rowI++){
-			for(int colI = 0; colI < COL; colI++){
+	}
+	else{
+
 		
-//			while(fscanf(readFilePointer,"%d", &loadArray[ROW][COL]) == 1){
-					loadArray[ROW][COL] = loadArray[rowI][colI];
-//				}
-				printf("%d", loadArray[rowI][colI]);
-			}	
-		}
+			while(fscanf(readFilePointer,"%c", &loadArray[rowI][colI]) == 1){
+			printf("%c", loadArray[rowI][colI]);
+			colI++;
+		if (loadArray[rowI][colI] == '\n'){
+			rowI++;
+				}
+			}
+				
+
+		printf("%d\n", rowI);
+		printf("%d\n", colI);
 		printf("Image loaded successfully\n");
-//	}
+	}
 	
 
 }
 
 void displayImage(){
+
 	char displayArray[ROW][COL];
 		for(int rowI = 0; rowI < ROW; rowI++){
 			for(int colI = 0; colI < COL; colI++){
