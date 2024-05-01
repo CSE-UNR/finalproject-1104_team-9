@@ -9,7 +9,7 @@
 #define FILE_SIZE 100
 
 
-void loadImage(FILE* readFilePointer), displayImage(), editImage(), cropImage(), dimImage(), brightenImage(), rotateImage(), saveImage();
+void loadImage(FILE* readFilePointer), displayImage(FILE* readFilePointer), editImage(), cropImage(), dimImage(), brightenImage(), rotateImage(), saveImage();
 
 
 int main(){
@@ -29,9 +29,10 @@ int main(){
 	switch(menuChoice){
 		case '1':
 			loadImage(readFilePointer);
+			
 			break;
 		case '2':
-			//function call to display image
+			displayImage(readFilePointer);
 			break;
 		case '3':	
 			break;
@@ -59,8 +60,7 @@ void loadImage(FILE* readFilePointer){
 	else{
 
 		
-			while(fscanf(readFilePointer,"%c", &loadArray[rowI][colI]) == 1){
-			printf("%c", loadArray[rowI][colI]);
+		while(fscanf(readFilePointer,"%c", &loadArray[rowI][colI]) == 1){
 			colI++;
 		if (loadArray[rowI][colI] == '\n'){
 			rowI++;
@@ -68,28 +68,25 @@ void loadImage(FILE* readFilePointer){
 			}
 				
 
-		printf("%d\n", rowI);
-		printf("%d\n", colI);
 		printf("Image loaded successfully\n");
 	}
 	
 
 }
 
-void displayImage(){
-
-	char displayArray[ROW][COL];
-		for(int rowI = 0; rowI < ROW; rowI++){
-			for(int colI = 0; colI < COL; colI++){
-				displayArray[ROW][COL] = displayArray[ROW][COL];
+void displayImage(FILE* readFilePointer){
+	int colI, rowI;
+	char loadArray[ROW][COL];
+	if(readFilePointer == NULL){
+		printf("Could not find an image with that file name.\n");
+	}
+	
+		while(fscanf(readFilePointer,"%c", &loadArray[rowI][colI]) == 1){
+			printf("%c", loadArray[rowI][colI]);
+			colI++;
+		if (loadArray[rowI][colI] == '\n'){
+			rowI++;
 			}
-			
-		}
-		for(int rowI = 0; rowI < ROW; rowI++){
-			for(int colI = 0; colI < COL; colI++){
-				printf(" %c", displayArray[rowI][colI]);
-			}
-			printf("\n");
 		}
 }
 void editImage(){
