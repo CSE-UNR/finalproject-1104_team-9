@@ -56,6 +56,7 @@ int main(){
 	
 
 	return 0;
+	
 }
 
 void loadImage(FILE* readFilePointer){
