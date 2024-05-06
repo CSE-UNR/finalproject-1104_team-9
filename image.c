@@ -18,7 +18,7 @@ int main(){
 	FILE* readFilePointer;
 	int colI, rowI;
 
-	
+	do{
 	printf("**TEAM_9_STAGRAM**\n");
 	printf("1: Load image\n");
 	printf("2: Display image\n");
@@ -34,11 +34,7 @@ int main(){
 			loadImage(readFilePointer);
 			break;
 		case '2':
-			if(readFilePointer == NULL){
-			printf("Sorry, no image to display\n\n");
-		}else{
 			displayImage(readFilePointer);
-			}
 			break;
 		case '3':
 			if(readFilePointer == NULL){
@@ -52,16 +48,14 @@ int main(){
 		default:
 			printf("Invalid option\n");
 			break;
-	}
-	
-
+		}
+	}while(menuChoice !=3);	
 	return 0;
-	
 }
 
 void loadImage(FILE* readFilePointer){
 	int colI, rowI;
-	char loadArray[ROW][COL];
+	char displayArray[ROW][COL];
 	char fileName[FILE_SIZE];
 	printf("What is the name of the image file? ");
 	scanf(" %s", fileName);
@@ -69,10 +63,8 @@ void loadImage(FILE* readFilePointer){
 	if(readFilePointer == NULL){
 		printf("Could not find an image with that file name.\n");
 	}
-	else{
-
-		
-		while(fscanf(readFilePointer,"%c", &loadArray[rowI][colI]) == 1){
+	
+		while(fscanf(readFilePointer,"%c", &loadArray[ROW][COL]) == 1){
 			colI++;
 		if (loadArray[rowI][colI] == '\n'){
 			rowI++;
@@ -80,17 +72,17 @@ void loadImage(FILE* readFilePointer){
 			}
 				
 
-		printf("Image loaded successfully\n");
-	}
+		printf("Image loaded successfully\n\n");
 	
 
 }
 
 void displayImage(FILE* readFilePointer){
-	int colI, rowI;
-	char loadArray[ROW][COL];
+	int colI = 0, rowI = 0;
+	char loadArray[rowI][colI];
 	if(readFilePointer == NULL){
-		printf("Could not find an image with that file name.\n");
+		printf("Sorry no image to display\n\n");
+		return;
 	}
 	
 		while(fscanf(readFilePointer,"%c", &loadArray[rowI][colI]) == 1){
