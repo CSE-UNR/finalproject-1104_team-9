@@ -10,10 +10,11 @@
 #define FILE_SIZE 100
 
 
-void loadImage(FILE* readFilePointer), displayImage(FILE* readFilePointer), editImage(int rowI, int colI, FILE* readFilePointer), cropImage(int rowI, int colI, FILE* readFilePointer), dimImage(int rowI, int colI, FILE* readFilePointer), brightenImage(), rotateImage(), saveImage(FILE* writeFilePointer);
+void loadImage(int rows, int cols, int loadArray[][cols], FILE* readFilePointer), displayImage(FILE* readFilePointer), editImage(int rowI, int colI, FILE* readFilePointer), cropImage(int rowI, int colI, FILE* readFilePointer), dimImage(int rowI, int colI, FILE* readFilePointer), brightenImage(int rowI, int colI), rotateImage(), saveImage(FILE* writeFilePointer);
 
 
 int main(){
+	int loadArray[ROW][COL];
 	char displayArray[ROW][COL];
 	char menuChoice;
 	FILE* readFilePointer;
@@ -35,7 +36,7 @@ int main(){
 	switch(menuChoice){
 		case '1':
 	
-			loadImage(readFilePointer);
+			loadImage(ROW, COL, loadArray, readFilePointer);
 			break;
 		case '2':
 			displayImage(readFilePointer);
@@ -54,9 +55,8 @@ int main(){
 }
 
 
-void loadImage(FILE* readFilePointer){
+void loadImage(int rows, int cols, int loadArray[][cols], FILE* readFilePointer){
 	int colI, rowI;
-	char loadArray[ROW][COL];
 	char fileName[FILE_SIZE];
 	printf("What is the name of the image file? ");
 	scanf(" %s", fileName);
@@ -67,7 +67,7 @@ void loadImage(FILE* readFilePointer){
 	else{
 
 		
-		while(fscanf(readFilePointer,"%c", &loadArray[rowI][colI]) == 1){
+		while(fscanf(readFilePointer,"%d", &loadArray[rowI][colI]) == 1){
 			colI++;
 			if (loadArray[rowI][colI] == '\n'){
 				rowI++;
@@ -76,7 +76,7 @@ void loadImage(FILE* readFilePointer){
 		printf("Image loaded successfully\n");
 	}
 	
-
+	fclose(readFilePointer);
 }
 
 void displayImage(FILE* readFilePointer){
@@ -115,6 +115,7 @@ void displayImage(FILE* readFilePointer){
 			}
 		}
 	printf("\n");
+	fclose(readFilePointer);
 }
 void editImage(int rowI, int colI, FILE* readFilePointer){
 	char editChoice;
@@ -135,7 +136,7 @@ void editImage(int rowI, int colI, FILE* readFilePointer){
 		dimImage(rowI, colI,readFilePointer);
 			break;
 		case '3':
-		brightenImage(rowI, colI, readFilePointer);
+		brightenImage(rowI, colI);
 			break;
 		case '0':
 		printf("Goodbye!");
@@ -201,34 +202,39 @@ void dimImage(int rowI, int colI, FILE* readFilePointer){
 	}
 }
 
-void brightenImage(int rowI, int colI, FILE* readFilePointer){
+void brightenImage(int rowI, int colI){
 	char loadArray[ROW][COL];
-		//figure out how to remove below line
-		readFilePointer = fopen(READ_NEW_IMAGE, "r");
-		while(fscanf(readFilePointer,"%c", &loadArray[rowI][colI]) == 1){
-			switch(loadArray[rowI][colI]) {
-           			case '0':
-           	     			printf(".");
-              	  			break;
-            			case '1':
-                			printf("o");
-               	 			break;
-            			case '2':
-                			printf("O");
-                			break;
-            			case '3':
-                			printf("0");
-                			break;
-            			case '4':
-                			printf("0");
-                			break;
-            		}
-			colI++;
-			if (loadArray[rowI][colI] == '\n'){
-				printf("\n");
-				rowI++;
+		for (int top; top <= rowI; top++){
+			for(int left; left <= colI; left++){
+			loadArray[ROW][COL] += 1;
+				switch(loadArray[rowI][colI]){
+           				case '0':
+           	     				printf(" ");
+              	  				break;
+            				case '1':
+                				printf(".");
+               	 				break;
+            				case '2':
+                				printf("o");
+                				break;
+		    			case '3':
+		        			printf("O");
+		        			break;
+		    			case '4':
+		        			printf("0");
+		        			break;
+            			//Error check
+                		printf("X");
+        			}
+				colI++;
+				if (loadArray[rowI][colI] == '\n'){
+					printf("\n");
+					rowI++;
+				}
 			}
 		}
+		
+		
 }
 
 void saveImage(FILE* writeFilePointer){
