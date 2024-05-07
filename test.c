@@ -10,7 +10,7 @@
 #define FILE_SIZE 100
 
 
-void loadImage(FILE* readFilePointer), displayImage(FILE* readFilePointer), editImage(int rowI, int colI, FILE* readFilePointer), cropImage(int rowI, int colI, FILE* readFilePointer), dimImage(int rowI, int colI, FILE* readFilePointer), brightenImage(), rotateImage(), saveImage();
+void loadImage(FILE* readFilePointer), displayImage(FILE* readFilePointer), editImage(int rowI, int colI, FILE* readFilePointer), cropImage(int rowI, int colI, FILE* readFilePointer), dimImage(int rowI, int colI, FILE* readFilePointer), brightenImage(), rotateImage(), saveImage(FILE* writeFilePointer);
 
 
 int main(){
@@ -19,7 +19,7 @@ int main(){
 	FILE* readFilePointer;
 	FILE* writeFilePointer;
 	
-	int colI, rowI;
+	int colI = 0, rowI = 0;
 	int dimOrBright;
 
 	do{
@@ -69,12 +69,10 @@ void loadImage(FILE* readFilePointer){
 		
 		while(fscanf(readFilePointer,"%c", &loadArray[rowI][colI]) == 1){
 			colI++;
-		if (loadArray[rowI][colI] == '\n'){
-			rowI++;
-				}
+			if (loadArray[rowI][colI] == '\n'){
+				rowI++;
 			}
-				
-
+		}
 		printf("Image loaded successfully\n");
 	}
 	
@@ -94,26 +92,26 @@ void displayImage(FILE* readFilePointer){
 			switch(loadArray[rowI][colI]) {
            			case '0':
            	     			printf(" ");
-              	  		break;
+              	  			break;
             			case '1':
                 			printf(".");
-               	 		break;
+               	 			break;
             			case '2':
                 			printf("o");
-                		break;
+                			break;
             			case '3':
                 			printf("O");
-                		break;
+                			break;
             			case '4':
                 			printf("0");
-                		break;
-            			default:
+                			break;
+            		//Error check
                 	printf("X");
-        }
+        		}
 			colI++;
-		if (loadArray[rowI][colI] == '\n'){
-			printf("\n");
-			rowI++;
+			if (loadArray[rowI][colI] == '\n'){
+				printf("\n");
+				rowI++;
 			}
 		}
 	printf("\n");
@@ -181,27 +179,26 @@ void dimImage(int rowI, int colI, FILE* readFilePointer){
 			switch(loadArray[rowI][colI]) {
            			case '0':
            	     			printf(" ");
-              	  		break;
+              	  			break;
             			case '1':
                 			printf(" ");
-               	 		break;
+               	 			break;
             			case '2':
                 			printf(".");
-                		break;
+                			break;
             			case '3':
                 			printf("o");
-                		break;
+                			break;
             			case '4':
                 			printf("O");
-                		break;
-            		
-        }
+                			break;         		
+        		}
 			colI++;
 		if (loadArray[rowI][colI] == '\n'){
 			printf("\n");
 			rowI++;
-			}
 		}
+	}
 }
 
 void brightenImage(int rowI, int colI, FILE* readFilePointer){
@@ -212,27 +209,44 @@ void brightenImage(int rowI, int colI, FILE* readFilePointer){
 			switch(loadArray[rowI][colI]) {
            			case '0':
            	     			printf(".");
-              	  		break;
+              	  			break;
             			case '1':
                 			printf("o");
-               	 		break;
+               	 			break;
             			case '2':
                 			printf("O");
-                		break;
+                			break;
             			case '3':
                 			printf("0");
-                		break;
+                			break;
             			case '4':
                 			printf("0");
-                		break;
-            		
-        }
+                			break;
+            		}
 			colI++;
-		if (loadArray[rowI][colI] == '\n'){
-			printf("\n");
-			rowI++;
+			if (loadArray[rowI][colI] == '\n'){
+				printf("\n");
+				rowI++;
 			}
 		}
 }
-void saveImage(){
-}
+
+void saveImage(FILE* writeFilePointer){
+	char saveChoice;
+	printf("Would you like to save the file? (y/n) ");
+	scanf(" %c", &saveChoice);
+		switch(saveChoice){
+			case 'y':
+				char fileName[FILE_SIZE];
+				printf("What do you want to name the image file? (include the extension) ");
+				scanf(" %s", fileName);
+				writeFilePointer = fopen(fileName, "w");
+	 			fclose(writeFilePointer);
+	 			printf("Image successfully saved!\n");	
+				break;
+		
+			case 'n':
+				printf("\n");
+				break;
+		}
+}	
