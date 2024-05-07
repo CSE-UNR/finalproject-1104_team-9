@@ -10,7 +10,7 @@
 #define FILE_SIZE 100
 
 
-void loadImage(int rows, int cols, char displayArray[][COL], FILE* readFilePointer), displayImage(int rowI, int colI, FILE* readFilePointer, char displayArray[][COL]), editImage(int rowI, int colI, char displayArray[][COL]), cropImage(int rowI, int colI), dimImage(int rowI, int colI), brightenImage(int rowI, int colI, char displayArray[][COL]), saveImage(FILE* writeFilePointer);
+void loadImage(int rowI, int colI, char displayArray[][COL], FILE* readFilePointer), displayImage(int rowI, int colI, FILE* readFilePointer, char displayArray[][COL]), editImage(int rowI, int colI, char displayArray[][COL]), cropImage(int rowI, int colI), dimImage(int rowI, int colI), brightenImage(int rowI, int colI, char displayArray[][COL]), saveImage(FILE* writeFilePointer);
 
 
 int main(){
@@ -35,7 +35,7 @@ int main(){
 	switch(menuChoice){
 		case '1':
 	
-			loadImage(ROW, COL, displayArray, readFilePointer);
+			loadImage(rowI, colI, displayArray, readFilePointer);
 			break;
 		case '2':
 			displayImage(rowI, colI, readFilePointer, displayArray);
@@ -54,8 +54,7 @@ int main(){
 }
 
 
-void loadImage(int rows, int cols, char displayArray[][COL], FILE* readFilePointer){
-	int colI, rowI;
+void loadImage(int rowI, int colI, char displayArray[][COL], FILE* readFilePointer){
 	char fileName[FILE_SIZE];
 	printf("What is the name of the image file? ");
 	scanf(" %s", fileName);
@@ -77,30 +76,29 @@ void loadImage(int rows, int cols, char displayArray[][COL], FILE* readFilePoint
 	
 	fclose(readFilePointer);
 }
-
 void displayImage(int rowI, int colI, FILE* readFilePointer, char displayArray[][COL]){
-		for (int top=0; top <= rowI; top++){
-			for(int left=0; left <= colI; left++){
+		for (int top = 0; top <= rowI; top++){
+			for(int left = 0; left <= colI; left++){
 				displayArray[ROW][COL] += 1;
-				switch(displayArray[rowI][colI]){
+				switch(displayArray[top][left]){
            				case '0':
-           	     				//printf(" ");
+           	     				printf(" ");
               	  				break;
             				case '1':
-                				//printf(".");
+                				printf(".");
                	 				break;
             				case '2':
-                				//printf("o");
+                				printf("o");
                 				break;
 		    			case '3':
-		        			//printf("O");
+		        			printf("O");
 		        			break;
 		    			case '4':
-		        			//printf("0");
+		        			printf("0");
 		        			break;
         			}
 			}
-			printf("test\n");
+		printf("\n");
 		}
 	}
 void editImage(int rowI, int colI, char displayArray[][COL]){
@@ -166,19 +164,19 @@ void brightenImage(int rowI, int colI, char displayArray[][COL]){
 			displayArray[ROW][COL] += 1;
 				switch(displayArray[rowI][colI]){
            				case '0':
-           	     				//printf(" ");
+           	     				printf(" ");
               	  				break;
             				case '1':
-                				//printf(".");
+                				printf(".");
                	 				break;
             				case '2':
-                				//printf("o");
+                				printf("o");
                 				break;
 		    			case '3':
-		        			//printf("O");
+		        			printf("O");
 		        			break;
 		    			case '4':
-		        			//printf("0");
+		        			printf("0");
 		        			break;
         			}
 			}
