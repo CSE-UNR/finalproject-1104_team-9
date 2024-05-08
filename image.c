@@ -10,7 +10,7 @@
 #define FILE_SIZE 100
 
 
-void loadImage(int rowI, int colI, char displayArray[][COL], FILE* readFilePointer), displayImage(int rowI, int colI, FILE* readFilePointer, char displayArray[][COL]), editImage(int rowI, int colI, char displayArray[][COL]), cropImage(int rowI, int colI), dimImage(int rowI, int colI), brightenImage(int rowI, int colI, char displayArray[][COL]), saveImage(FILE* writeFilePointer);
+void loadImage(int rowI, int colI, char displayArray[][COL], FILE* readFilePointer), displayImage(int rows, int cols,char displayArray[][COL]), editImage(int rowI, int colI, char displayArray[][COL]), cropImage(int rowI, int colI, char displayArray[][COL]), dimImage(int rowI, int colI, char displayArray[][COL]), brightenImage(int rowI, int colI, char displayArray[][COL]), saveImage(FILE* writeFilePointer);
 
 
 int main(){
@@ -19,7 +19,7 @@ int main(){
 	FILE* readFilePointer;
 	FILE* writeFilePointer;
 	
-	int colI = 0, rowI = 0;
+	int rows = 0, cols = 0, rowI = 0, colI = 0;
 	int dimOrBright;
 
 	do{
@@ -35,13 +35,13 @@ int main(){
 	switch(menuChoice){
 		case '1':
 	
-			loadImage(rowI, colI, displayArray, readFilePointer);
+			loadImage(rows, cols, displayArray, readFilePointer);
 			break;
 		case '2':
-			displayImage(rowI, colI, readFilePointer, displayArray);
+			displayImage(rowI, colI, displayArray);
 			break;
 		case '3':
-			editImage(rowI, colI, displayArray);
+			editImage(rows, cols, displayArray);
 			break;
 		case '0':
 			break;
@@ -54,7 +54,7 @@ int main(){
 }
 
 
-void loadImage(int rowI, int colI, char displayArray[][COL], FILE* readFilePointer){
+void loadImage(int rowI, int colI, char displayArray[][colI], FILE* readFilePointer){
 	char fileName[FILE_SIZE];
 	printf("What is the name of the image file? ");
 	scanf(" %s", fileName);
@@ -65,7 +65,7 @@ void loadImage(int rowI, int colI, char displayArray[][COL], FILE* readFilePoint
 	else{
 
 		
-		while(fscanf(readFilePointer,"%c", &displayArray[rowI][colI]) == 1){
+		while(fscanf(readFilePointer,"%c ", &displayArray[rowI][colI]) == 1){
 			colI++;
 			if (displayArray[rowI][colI] == '\n'){
 				rowI++;
@@ -76,31 +76,16 @@ void loadImage(int rowI, int colI, char displayArray[][COL], FILE* readFilePoint
 	
 	fclose(readFilePointer);
 }
-void displayImage(int rowI, int colI, FILE* readFilePointer, char displayArray[][COL]){
-		for (int top = 0; top <= rowI; top++){
-			for(int left = 0; left <= colI; left++){
-				displayArray[ROW][COL] += 1;
-				switch(displayArray[top][left]){
-           				case '0':
-           	     				printf(" ");
-              	  				break;
-            				case '1':
-                				printf(".");
-               	 				break;
-            				case '2':
-                				printf("o");
-                				break;
-		    			case '3':
-		        			printf("O");
-		        			break;
-		    			case '4':
-		        			printf("0");
-		        			break;
-        			}
+void displayImage(int rows, int cols, char displayArray[][cols]){
+	int rowI = 0, colI = 0;
+		for(int rowI = 0; rowI <= rows; rowI++){
+			for(int colI = 0; colI <= cols; colI++){
+				printf("%c", displayArray[rowI][colI]);	
 			}
-		printf("\n");
 		}
-	}
+	printf("\n");
+		
+}
 void editImage(int rowI, int colI, char displayArray[][COL]){
 	char editChoice;
 	printf("**EDITING**\n");
@@ -113,10 +98,10 @@ void editImage(int rowI, int colI, char displayArray[][COL]){
 	do{
 	switch(editChoice){
 		case '1':
-		cropImage(rowI, colI);
+		cropImage(rowI, colI, displayArray);
 			break;
 		case '2':
-		dimImage(rowI, colI);
+		dimImage(rowI, colI, displayArray);
 			break;
 		case '3':
 		brightenImage(rowI, colI, displayArray);
@@ -131,10 +116,10 @@ void editImage(int rowI, int colI, char displayArray[][COL]){
 	}while(editChoice != 0);	
 }
 
-void cropImage(int rowI, int colI){
+void cropImage(int rowI, int colI, char displayArray[][COL]){
 	
 	int left, right, top, bottom;
-	char displayArray[ROW][COL];
+	//char displayArray[ROW][COL];
 	//We need to make variables for the image we are going to crop
 	printf("The image you want to crop is %d x %d.\n", rowI, colI);
 	printf("The row and column values start in the upper lefthand corner.\n");
@@ -155,7 +140,32 @@ void cropImage(int rowI, int colI){
 
 }
 
-void dimImage(int rowI, int colI){
+void dimImage(int rowI, int colI, char displayArray[][COL]){
+	for (int top = 0; top <= rowI; top++){
+			for(int left = 0; left <= colI; left++){
+				displayArray[ROW][COL] -= 1;
+				switch(displayArray[top][left]){
+           				case '0':
+           	     				printf(" ");
+              	  				break;
+            				case '1':
+                				printf(".");
+               	 				break;
+            				case '2':
+                				printf("o");
+                				break;
+		    			case '3':
+		        			printf("O");
+		        			break;
+		    			case '4':
+		        			printf("0");
+		        			break;
+		        		case '\n':
+		        			printf("\n");
+		        			break;
+        			}
+			}
+		}
 }
 
 void brightenImage(int rowI, int colI, char displayArray[][COL]){
@@ -178,12 +188,13 @@ void brightenImage(int rowI, int colI, char displayArray[][COL]){
 		    			case '4':
 		        			printf("0");
 		        			break;
+		        		case '\n':
+		        			printf("\n");
+		        			break;
         			}
 			}
-			printf("test\n");
-		}
-		
-		
+
+		}		
 }
 
 void saveImage(FILE* writeFilePointer){
